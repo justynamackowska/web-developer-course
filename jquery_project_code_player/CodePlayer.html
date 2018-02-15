@@ -1,0 +1,177 @@
+<html>
+
+	<head>
+	
+	<title>CodePlayer</title>
+	<meta charset="utf-8">
+	
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="jquery-ui/jquery-ui.js"></script>
+	
+	<link href="jquery-ui/jquery-ui.css" rel="stylesheet">
+	
+	<style type="text/css">
+		body {
+			font-family: helvetica, sans-serif;
+			padding:0;
+			margin:0;
+		}
+		#title-container {
+			background-color:#EDEDED;
+			width:100%;
+			height:40px;		
+		}
+		#title {
+			position:relative;
+			top:8;
+			left:10;
+			font-weight:bold;
+			font-size:19px;
+		}
+		#buttons {
+			text-align:center;
+			position:relative;
+			top:-20;
+			font-size:0;
+		}
+		.button {
+			background-color:#ECF1FD;
+			border:1px solid #646973;
+			height:32px;
+			margin:0;
+			font-size:14px;
+		}
+		.button:hover {
+			background-color:#494949;
+		}
+		#html {
+			border-top-left-radius:5px;
+			border-bottom-left-radius:5px;
+			
+		}
+		#output {
+			border-top-right-radius:5px;
+			border-bottom-right-radius:5px;
+		}
+		#html, #css, #javascript {
+			border-right:none;
+		}
+		#css, #javascript{
+			background-color:#EDEDED;
+		}
+		.field {
+			height:300px;
+			width:400px;
+			border-right:1px solid #BDBDBD;
+			border-bottom:1px solid #BDBDBD;
+			border-top:none;
+			border-left:none;
+			float:left;
+			resize:none;
+		}
+		#cssField, #jsField {
+			display:none;
+		}
+		
+		
+		
+		
+	
+	</style>
+	</head>
+	
+	<body>
+		<div id="title-container">
+			<div id="title">CodePlayer</div>
+			<div id="buttons">
+				<button class="button" id="html">HTML</button>
+				<button class="button" id="css">CSS</button>
+				<button class="button" id="javascript">JavaScript</button>
+				<button class="button" id="output">Output</button>	
+			</div>
+		</div>
+		<div id="fields-container">
+			<textarea class="field" id="htmlField"></textarea>
+			<textarea class="field" id="cssField"></textarea>
+			<textarea class="field" id="jsField"></textarea>
+			<div class="field" id="outputField">
+				<div><style id="outputCss"><br></style></div>
+				<div id="outputHtml"><br></div>
+				<script></script>
+			</div>
+		</div>
+	
+	<script>
+		var htmlActive = true;
+		$("#html").click(function() {
+			if (htmlActive) {
+				$(this).css("background-color","#EDEDED");
+				$("#htmlField").hide();
+				htmlActive = false;
+			} else {
+				$(this).css("background-color","#ECF1FD");
+				$("#htmlField").show();
+				htmlActive = true;
+			}		
+		});
+		var cssActive = false;
+		$("#css").click(function() {
+			if (cssActive) {
+				$(this).css("background-color","#EDEDED");
+				$("#cssField").hide();
+				cssActive = false;
+			} else {
+				$(this).css("background-color","#ECF1FD");
+				$("#cssField").show();
+				cssActive = true;
+			}		
+		});
+		var javascriptActive = false;
+		$("#javascript").click(function() {
+			if (javascriptActive) {
+				$(this).css("background-color","#EDEDED");
+				$("#jsField").hide();
+				javascriptActive = false;
+			} else {
+				$(this).css("background-color","#ECF1FD");
+				$("#jsField").show();
+				javascriptActive = true;
+			}		
+		});
+		var outputActive = true;
+		$("#output").click(function() {
+			if (outputActive) {
+				$(this).css("background-color","#EDEDED");
+				$("#outputField").hide();
+				outputActive = false;
+			} else {
+				$(this).css("background-color","#ECF1FD");
+				$("#outputField").show();
+				outputActive = true;
+			}		
+		});
+		
+			
+		$("#htmlField").keyup(function() {
+			$("#outputHtml").html($(this).val());
+			$("#outputCss").html($("#cssField").val());
+			$("#outputJs").html($("#jsField").val());
+			
+		});
+		$("#cssField").keyup(function() {
+			$("#outputCss").html($(this).val());
+			$("#outputHtml").html($("#htmlField").val());
+			$("#outputJs").html($("#jsField").val());
+			
+		});
+		$("#jsField").keyup(function() {
+			$("#outputCss").html($("#cssField").val());
+			$("#outputHtml").html($("#htmlField").val());
+			$("#outputJs").html($("#jsField").val());
+			
+		});
+		
+	
+	</script>
+	</body>
+<html>
