@@ -1,0 +1,12 @@
+			#figures {
+				background-color:purple;
+				height:100px;
+				width:100px;
+				position: relative;
+				top:50px;
+				left:100px;
+				border-radius:0%;
+			}
+			body {
+				font-family:sans-serif;
+			}
