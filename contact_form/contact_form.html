@@ -3,7 +3,13 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<style type="text/css">
+	#error {
+		display:none;
+	}
+	</style>
     <title>Get in touch!</title>
   </head>
   <body>
@@ -11,6 +17,7 @@
 	
 		<h1>Get in touch!</h1>
 		
+		<div id="error" class="alert alert-danger" role="alert">test</div>
 		<form>
 		  <div class="form-group">
 			<label for="email">Email address</label>
@@ -26,7 +33,8 @@
 			<textarea class="form-control" id="message" rows="3"></textarea>
 		  </div>
 		 
-		  <button type="submit" class="btn btn-primary">Submit</button>
+		  <input type="button" class="btn btn-primary" id="submitButton" value="Submit">
+		 
 		</form>
 		
 		
@@ -36,9 +44,35 @@
 		
 	</div>
 	
-	
-	
-
+	<script type="text/javascript">
+		
+			$("#submitButton").click(function() {
+				var fieldMissing = "";
+				var errorMessage = "";
+				
+				if ($("#email").val() == "") {
+					fieldMissing += "<br>The email field is required.";
+				}
+				if ($("#subject").val() == "") {
+					fieldMissing += "<br>The subject field is required.";
+				}
+				if ($("#message").val() == "") {
+					fieldMissing += "<br>The message field is required.";
+				}
+				
+				
+				if (fieldMissing != "") {
+					errorMessage = "<p><strong> There were error(s) in your form:</strong>" + fieldMissing +"</p>";
+				}
+				
+				
+				if (errorMessage != "") {
+					$("#error").html(errorMessage);
+					$("#error").show();
+					
+				} 
+			});
+	</script>
     
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
