@@ -1,3 +1,10 @@
+<?php
+	$link = "";
+	if ($_GET) {
+      $city = ($_GET["city"]);
+      $link = "https://www.weather-forecast.com/locations/".$city."/forecasts/latest";
+    }
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -22,6 +29,7 @@
 		#submit {
 			width:120px;
 			font-size:18px;
+          	margin-bottom: 30px;
 		}
 	</style>
     <title>Weather scraper</title>
@@ -34,11 +42,11 @@
 			<h5>Enter the name of a city.</h5>
 			<form>
 			  <div class="form-group">
-				<input type="text" class="form-control" id="city" aria-describedby="emailHelp" placeholder="Eg. London, Tokyo">
+				<input type="text" class="form-control" id="city" name="city" aria-describedby="emailHelp" placeholder="Eg. London, Tokyo">
 			  </div>
 			   <button type="submit" class="btn btn-secondary" id="submit">Submit</button>
 			</form>
-			<div id= "feedback"></div>
+			<div id= "feedback"><? echo $link; ?></div>
 		</div>
 	</div>
   
