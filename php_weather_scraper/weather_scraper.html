@@ -3,15 +3,21 @@
 	$content = "";
 	$find = "";
 	$scrap = "";
-	if ($_GET) {
-      $city = ($_GET["city"]);
+	if (array_key_exists("city", $_GET)) {
+      $city = str_replace(" ", "-", ($_GET["city"]));
       $link = "https://www.weather-forecast.com/locations/".$city."/forecasts/latest";
-      $content = file_get_contents($link);
-      $find = strchr($content, $city." Weather Today ");
-      if ($find != "") {
+      $file_headers = @get_headers($link);
+      $exists = true;
+	  if(!$file_headers || $file_headers[0] == 'HTTP/1.1 404 Not Found') {
+    	$exists = false;
+	  } else {
+      	$content = file_get_contents($link);
+      	$find = strchr($content, '</span><p class="b-forecast__table-description-content"><span class="phrase">');
+      }
+      if ($exists != false && $find != "") {
         $scrap = '<div class="alert alert-success" role="alert">'.strchr($find, "</p>", true).'</div>';
       } else {
-        $scrap = '<div class="alert alert-danger" role="alert">'."This city could not be found".'</div>';
+        $scrap = '<div class="alert alert-danger" role="alert">'."That city could not be found".'</div>';
       }
     }
 ?>
@@ -57,7 +63,9 @@
 			<h5>Enter the name of a city.</h5>
 			<form>
 			  <div class="form-group">
-				<input type="text" class="form-control" id="city" name="city" aria-describedby="emailHelp" placeholder="Eg. London, Tokyo">
+				<input type="text" class="form-control" id="city" name="city" aria-describedby="emailHelp" placeholder="Eg. London, Tokyo" value="<?php
+                                                                                                                                                  if (array_key_exists("city", $_GET)) {
+                                                                                                                                                    echo $_GET["city"];}?>">
 			  </div>
 			   <button type="submit" class="btn btn-secondary" id="submit">Submit</button>
 			</form>
