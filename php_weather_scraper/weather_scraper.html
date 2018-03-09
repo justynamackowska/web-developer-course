@@ -1,8 +1,18 @@
 <?php
 	$link = "";
+	$content = "";
+	$find = "";
+	$scrap = "";
 	if ($_GET) {
       $city = ($_GET["city"]);
       $link = "https://www.weather-forecast.com/locations/".$city."/forecasts/latest";
+      $content = file_get_contents($link);
+      $find = strchr($content, $city." Weather Today ");
+      if ($find != "") {
+        $scrap = '<div class="alert alert-success" role="alert">'.strchr($find, "</p>", true).'</div>';
+      } else {
+        $scrap = '<div class="alert alert-danger" role="alert">'."This city could not be found".'</div>';
+      }
     }
 ?>
 <!doctype html>
@@ -24,13 +34,18 @@
 		}
 		#city {
 			margin:40px auto 30px auto;
-			width:450px;	
+			width:500px;	
 		}
 		#submit {
 			width:120px;
 			font-size:18px;
           	margin-bottom: 30px;
 		}
+      	#feedback {
+        	width:500px;
+          	font-weight:normal;
+          	margin: 0 auto;
+        }
 	</style>
     <title>Weather scraper</title>
   </head>
@@ -46,7 +61,7 @@
 			  </div>
 			   <button type="submit" class="btn btn-secondary" id="submit">Submit</button>
 			</form>
-			<div id= "feedback"><? echo $link; ?></div>
+			<div id= "feedback"><? echo $scrap; ?></div>
 		</div>
 	</div>
   
