@@ -2,9 +2,31 @@
 
 	session_start();
 
+	$diaryContent = "";
+
 		if (array_key_exists("id", $_COOKIE))	{
           
          $_SESSION['id'] = $_COOKIE['id']; 
+          
+        }
+
+		if (array_key_exists("id", $_SESSION) && $_SESSION['id'])	{
+          
+         $link = mysqli_connect("shareddb-i.hosting.stackcp.net", "secret-diary-3337e0b3", "knu52vfsef", "secret-diary-3337e0b3");
+      
+			if (mysqli_connect_error()) {
+        
+        		die ("There was an error connecting to the database");
+        
+    		} 
+          
+          $id = $_SESSION['id'];
+          
+          $query = "SELECT diary FROM `secret-diary` WHERE id = '$id' LIMIT 1";
+          
+          $row = mysqli_fetch_array(mysqli_query($link, $query));
+          
+          $diaryContent = $row['diary'];
           
         }
 
@@ -39,15 +61,25 @@
         <a class="btn btn-outline-success my-2 my-sm-0" href='index.php?logout=1'>Log out</a>
       </form>
     </nav>
-    <form id="diary" method="post">
-      <div class="container">
-          <textarea class="form-control" rows="30"></textarea>
-      </div>
-    </form>
+    <div class="container-fluid">
+            <textarea id="diary" class="form-control" rows="30"><?php echo $diaryContent; ?></textarea>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+    
+  $('#diary').bind('input propertychange', function() {
+     	 $.ajax({
+         	method: "POST",
+            url: "updatedatabase.php",
+            data: { content: $("#diary").val()}
+           });
+        
+	});
     
     
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    
+    </script>
   </body>
 </html>

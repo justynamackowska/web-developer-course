@@ -164,6 +164,9 @@
         .message-box	{
         	margin: 20px 0 2px 0;  
         }
+        .btn-link	{
+        	font-weight:bold;  
+        }
 	</style>
     <title>Secret diary</title>
   </head>
